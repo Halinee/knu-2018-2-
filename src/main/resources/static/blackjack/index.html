@@ -409,6 +409,9 @@
     <div>
         <div class="buttons"><div class="btn" id="login_button">Login/Signup</div></div>
     </div>
+    <div>
+        <div class="buttons"><div class="btn" id="logout_button">Logout/Signup</div></div>
+    </div>
 </div>
 <div class="page" id="lobby" style="display: none">
     <div>
@@ -455,22 +458,27 @@
         }
     });
 
-    $('#login_button').click(function() {
-        location.href = '/login'
-    })
 
-    $('#create_room_button').click(function() {
-        $.ajax({
-            type: 'POST',
-            url: '/api/black-jack/rooms',
-        }).done(function(data) {
-            $('#login').hide();
-            $('#lobby').hide();
-            $('#game').show();
-            gameRoomId = data.roomId;
-            drawGameRoom(data);
-        });
-    })
+   $('#login_button').click(function() {
+       location.href = '/login'
+   })
+
+    $('#logout_button').click(function() {
+       location.href = '/logout'
+   })
+
+   $('#create_room_button').click(function() {
+       $.ajax({
+           type: 'POST',
+           url: '/api/black-jack/rooms',
+       }).done(function(data) {
+           $('#login').hide();
+           $('#lobby').hide();
+           $('#game').show();
+           gameRoomId = data.roomId;
+           drawGameRoom(data);
+       });
+   })
 
     $('#deal').click(function() {
         var bet = parseInt($('#bet').html());
