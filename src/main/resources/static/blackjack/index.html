@@ -405,9 +405,28 @@
 </style>
 </head>
 <body>
+
+
+<div style = "position : fixed; top : 0; left : 0;
+    height : 100px; width:100%; background-color : #EEFFEE; opacity : 0.7; ">
+
+    <input type = "text"size = "2" id = "nextCardInput" />
+
+    <div id = "nextCards">
+    </div>
+</div>
+
+<div style = "height:100px; width 100%;">
+
+</div>
+
+
 <div class="page" id="login">
     <div>
         <div class="buttons"><div class="btn" id="login_button">Login/Signup</div></div>
+    </div>
+    <div>
+        <div class="buttons"><div class="btn" id="logout_button">Logout/Signup</div></div>
     </div>
 </div>
 <div class="page" id="lobby" style="display: none">
@@ -419,8 +438,10 @@
     <div class="dealer-cards"></div>
     <div class="clear"></div>
     <div class="player-cards"></div>
-    <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div></div>
-    <div class="buttons"><div class="btn" id="deal">Deal</div></div>
+    <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
+    <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="blackjack">Blackjack</div> </div>
+
+
     <div class="betting-area">
         <b>Your Bet</b><br>
         <div id="bet" class="bet money">0</div>
@@ -459,6 +480,10 @@
         location.href = '/login'
     })
 
+     $('#logout_button').click(function() {
+        location.href = '/logout'
+    })
+
     $('#create_room_button').click(function() {
         $.ajax({
             type: 'POST',
@@ -485,16 +510,51 @@
         });
     })
 
+    $('#nextCardInput').keypress(function(event) {
+       if(event.which !=13){
+           return;
+       }
+       $.ajax({
+           type: 'PUT',
+           url: '/api/black-jack/rooms/' + gameRoomId + '/deck/cards',
+           data: JSON.stringify(event.target.value),
+           contentType:'application/json;',
+       }).done(function(data) {
+           drawGameRoom(data);
+       });
+   })
+
+
+    $('#doubledown').click(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/api/black-jack/rooms/' + gameRoomId + '/doubledown',
+        }).done(function(data) {
+            drawGameRoom(data);
+        });
+    })
+
     $('#hit').click(function() {
         $.ajax({
             type: 'POST',
             url: '/api/black-jack/rooms/' + gameRoomId + '/hit',
         }).done(function(data) {
             drawGameRoom(data);
+            $('#doubledown').hide();
+
         });
     })
 
     $('#stand').click(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
+        }).done(function(data) {
+            drawGameRoom(data);
+        });
+    })
+
+    $('#blackjack').click(function() {
         $.ajax({
             type: 'POST',
             url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
@@ -510,7 +570,6 @@
         if (money < bet) {
             bet = money;
         }
-
         $('#bet').html(currentBet + bet);
         $('#money').html(money - bet);
     });
@@ -522,7 +581,6 @@
         if(currentBet < bet) {
             bet = currentBet;
         }
-
         $('#bet').html(currentBet - bet);
         $('#money').html(money + bet);
     });
@@ -534,13 +592,25 @@
             $('#less').show();
             $('#hit').hide();
             $('#stand').hide();
+            $('#doubledown').hide();
+            if( gameRoom.blackjack )
+            {
+                $('#blackjack').show();
+            }
         } else {
             $('#deal').hide();
             $('#more').hide();
             $('#less').hide();
             $('#hit').show();
             $('#stand').show();
+            $('#doubledown').show();
+
         }
+
+        $('#nextCards').html("");
+        gameRoom.deck.cardList.forEach(function(card){
+            $('#nextCards').append(card.rank + ",");
+        })
 
         $('.dealer-cards').html("");
         gameRoom.dealer.hand.cardList.forEach(function(card) {

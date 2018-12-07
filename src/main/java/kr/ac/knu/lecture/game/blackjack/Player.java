@@ -2,6 +2,7 @@ package kr.ac.knu.lecture.game.blackjack;
 
 import kr.ac.knu.lecture.exception.NotEnoughBalanceException;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by rokim on 2018. 5. 26..
@@ -15,6 +16,11 @@ public class Player {
     private boolean isPlaying;
     @Getter
     private Hand hand;
+    @Getter
+    @Setter
+    private boolean isDoubleDown = false;   //doubledown을 사용했는지 판단
+    @Getter
+    private boolean isBlackJack = false;    //blackjack 판단
 
     public Player(long seedMoney, Hand hand) {
         this.balance = seedMoney;
@@ -32,6 +38,7 @@ public class Player {
         if (balance < bet) {
             throw new NotEnoughBalanceException();
         }
+
         balance -= bet;
         currentBet = bet;
 
@@ -41,11 +48,26 @@ public class Player {
     public void deal() {
         hand.drawCard();
         hand.drawCard();
+
+        if(hand.getCardSum() == 21) {
+            isBlackJack = true;
+            stand();
+        }
     }
 
     public void win() {
-        balance += currentBet * 2;
-        currentBet = 0;
+        if(isBlackJack) {
+            balance += currentBet * 1.5;
+            currentBet = 0;
+        }
+        if( isDoubleDown )
+        {
+            balance += currentBet * 4;
+            currentBet = 0;
+        }
+        else
+            balance += currentBet * 2;
+            currentBet = 0;
     }
 
     public void tie() {

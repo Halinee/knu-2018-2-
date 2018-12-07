@@ -2,6 +2,7 @@ package kr.ac.knu.lecture.game.blackjack;
 
 import kr.ac.knu.lecture.exception.NoSuchRankException;
 import lombok.Data;
+import lombok.Getter;
 
 /**
  * Created by rokim on 2018. 5. 26..
@@ -18,4 +19,5 @@ public class Card {
         this.rank = rank;
         this.suit = suit;
     }
+
 }

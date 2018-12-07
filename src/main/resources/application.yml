@@ -1,5 +1,5 @@
 server:
-  port: 8880
+  port: 8884
 
 spring:
   h2:
@@ -36,10 +36,20 @@ spring:
 
 github:
   client:
-    clientId: 2649d2ed3ab936772f67
-    clientSecret: 850891e4ed61a5d957884411ed2dd90fb5b567e2
+    clientId: 5896d7d91e1ccd4b395f
+    clientSecret: 1f8a4c2200d755145a57b70c4692b789a34334a4
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
+
+    naver:
+      client:
+        clientId: V6cEKbpGnKz_Yqs67iUj
+        clientSecret: MhKe1tIqY_
+        accessTokenUri: https://nid.naver.com/oauth2.0/token
+        userAuthorizationUri: https://nid.naver.com/oauth2.0/authorize
+        clientAuthenticationScheme: form
+      resource:
+        userInfoUri: https://openapi.naver.com/v1/nid/me

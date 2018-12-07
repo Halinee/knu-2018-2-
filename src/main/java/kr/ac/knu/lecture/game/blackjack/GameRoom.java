@@ -20,6 +20,9 @@ public class GameRoom {
     private final Deck deck;
     @Getter
     private boolean isFinished;
+
+    private boolean isHitClicked = false;
+
     private final Evaluator evaluator;
 
     public GameRoom(Deck deck) {
@@ -60,7 +63,7 @@ public class GameRoom {
 
     public Card hit(String name) {
         Player player = playerList.get(name);
-
+        isHitClicked = true;
         return player.hitCard();
     }
 
@@ -68,6 +71,16 @@ public class GameRoom {
         Player player = playerList.get(name);
 
         player.stand();
+    }
+
+    //더블다운 하면 게임 끝
+    public void doubledown(String name){
+        Player player = playerList.get(name);
+
+        player.setDoubleDown(true);
+        player.placeBet(player.getCurrentBet());    // 처음 배팅 금액만큼 배팅
+        player.hitCard();   // 카드 뽑기
+        player.stand();     // 게임 끝내기
     }
 
     public void playDealer() {
