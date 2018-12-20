@@ -7,13 +7,7 @@ import kr.ac.knu.lecture.service.BlackjackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by rokim on 2018. 5. 21..
@@ -50,6 +44,11 @@ public class BlackjackApiController {
     public GameRoom stand(@AuthenticationPrincipal User user, @PathVariable String roomId) {
         User currentuser = userRepository.getOne(user.getName());
         return blackjackService.stand(roomId, currentuser);
+    }
+
+    @PutMapping("/rooms/{roomId}/deck/cards")
+    public GameRoom addNextCards(@PathVariable String roomId, @RequestBody int rank){
+       return blackjackService.addNextCards(roomId, rank);
     }
 
     @GetMapping("/rooms/{roomId}")
