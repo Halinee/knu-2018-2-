@@ -421,14 +421,17 @@
 </div>
 
 
+<div class="buttons"><div class="btn" id="logout_button">logout</div></div>
+</div>
+
+
 <div class="page" id="login">
     <div>
-        <div class="buttons"><div class="btn" id="login_button">Login/Signup</div></div>
-    </div>
-    <div>
-        <div class="buttons"><div class="btn" id="logout_button">Logout/Signup</div></div>
+        <div class="buttons"><div class="btn" id="naver_login_button">Naver 로그인</div></div>
+        <div class="buttons"><div class="btn" id="github_login_button">Github 로그인</div></div>
     </div>
 </div>
+
 <div class="page" id="lobby" style="display: none">
     <div>
         <div class="buttons"><div class="btn" id="create_room_button">Create</div></div>
@@ -476,9 +479,13 @@
         }
     });
 
-    $('#login_button').click(function() {
-        location.href = '/login'
-    })
+    $('#naver_login_button').click(function() {
+       location.href = '/login/naver'
+   })
+
+   $('#github_login_button').click(function() {
+       location.href = '/login/github'
+   })
 
      $('#logout_button').click(function() {
         location.href = '/logout'
@@ -564,7 +571,7 @@
     })
 
     $('#more').click(function(){
-        var bet = 100;
+        var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
         if (money < bet) {
@@ -575,7 +582,7 @@
     });
 
     $('#less').click(function(){
-        var bet = 100;
+        var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
         if(currentBet < bet) {

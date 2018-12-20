@@ -106,23 +106,4 @@ public class BlackjackService {
         return gameRoom;
     }
 
-    private void updateGameResult(GameRoom gameRoom)
-    {
-        if( gameRoom.isFinished() ) {
-            gameRoom.getPlayerList().forEach((loginId, player) -> {
-                User playUser = userRepository.findById(loginId).orElseThrow(() -> new RuntimeException());
-                playUser.setAccount(player.getBalance());
-
-                userRepository.save(playUser);
-            });
-        }
-    }
-
-    public GameRoom addNextCards(String roomId, int rank) {
-        GameRoom gameRoom = gameRoomMap.get(roomId);
-        Deck deck = gameRoom.getDeck();
-        deck.addNextCard(rank);
-
-        return gameRoom;
-    }
 }
