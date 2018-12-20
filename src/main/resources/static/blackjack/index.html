@@ -466,6 +466,9 @@
 <script>
     var user;
     var gameRoomId;
+    var maxCount = 10000;
+    var betCount = parseInt($('#bet').html());;
+
 
     $.ajax({
         type: 'GET',
@@ -506,6 +509,7 @@
 
     $('#deal').click(function() {
         var bet = parseInt($('#bet').html());
+        betCount = parseInt($('#bet').html());;
 
         $.ajax({
             type: 'POST',
@@ -574,17 +578,26 @@
         var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
+
+        betCount += 1000;
+
         if (money < bet) {
             bet = money;
         }
-        $('#bet').html(currentBet + bet);
-        $('#money').html(money - bet);
+        if(betCount <= maxCount) {
+            currentBet += bet;
+            money -= bet;
+        }
+        $('#bet').html(currentBet);
+        $('#money').html(money);
     });
 
     $('#less').click(function(){
         var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
+
+
         if(currentBet < bet) {
             bet = currentBet;
         }

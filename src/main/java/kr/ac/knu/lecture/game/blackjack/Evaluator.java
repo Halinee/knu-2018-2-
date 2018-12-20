@@ -29,11 +29,15 @@ public class Evaluator {
 
         playerMap.forEach((s, player) -> {
             int playerResult = player.getHand().getCardSum();
+            
             if (playerResult > 21) {
                 player.lost();
-            } else if(dealerResult > 21) {
-                player.win();
-            } else if (playerResult > dealerResult) {
+            } else if(dealerResult > 21 && playerResult > 21) {
+                    player.tie();
+                } else if(dealerResult > 21 && playerResult <= 21){
+                    player.win();
+            }
+            else if (playerResult > dealerResult) {
                     player.win();
             } else if (playerResult == dealerResult) {
                 player.tie();
