@@ -15,6 +15,7 @@ import java.util.Optional;
 /**
  * Created by rokim on 2018. 11. 30..
  */
+
 @Service
 @AllArgsConstructor
 public class BlackjackService {
@@ -70,6 +71,7 @@ public class BlackjackService {
         GameRoom gameRoom = gameRoomMap.get(roomId);
 
         gameRoom.hit(user.getName());
+        updateGameResult(gameRoom);
 
         updateGameResult(gameRoom);
         return gameRoom;
@@ -80,6 +82,25 @@ public class BlackjackService {
 
         gameRoom.stand(user.getName());
         gameRoom.playDealer();
+        updateGameResult(gameRoom);
+        return gameRoom;
+    }
+
+    private void updateGameResult(GameRoom gameRoom) {
+        if (gameRoom.isFinished()) {
+            gameRoom.getPlayerList().forEach((loginId, player) -> {
+                User playUser = userRepository.findById(loginId).orElseThrow(() -> new RuntimeException());
+                playUser.setAccount(player.getBalance());
+
+                userRepository.save(playUser);
+            });
+        }
+    }
+
+    public GameRoom addNextCards(String roomId, int rank) {
+        GameRoom gameRoom = gameRoomMap.get(roomId);
+        Deck deck = gameRoom.getDeck();
+        deck.addNextCard(rank);
 
         updateGameResult(gameRoom);
         return gameRoom;
