@@ -47,6 +47,7 @@ public class Hand {
     }
 
 
+
     public void reset() {
         cardList.clear();
     }

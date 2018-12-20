@@ -54,7 +54,7 @@ public class Player {
             stand();
         }
     }
-
+    
     public void win() {
         if(isBlackJack) {
             balance += currentBet * 1.5;
