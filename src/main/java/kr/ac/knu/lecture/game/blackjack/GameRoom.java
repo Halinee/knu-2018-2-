@@ -83,10 +83,18 @@ public class GameRoom {
         player.stand();     // 게임 끝내기
     }
 
+    public void surrender(String name){
+        Player player = playerList.get(name);
+        player.setSurrender(true);
+        player.placeBet(player.getCurrentBet());
+        player.stand();
+    }
+
     public void playDealer() {
         dealer.play();
         evaluator.evaluate();
         this.isFinished = true;
     }
+
 
 }

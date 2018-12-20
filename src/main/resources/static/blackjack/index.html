@@ -443,6 +443,7 @@
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="blackjack">Blackjack</div> </div>
+    <div class="buttons"><div class="btn" id="surrender">Surrender</div></div>
 
 
     <div class="betting-area">
@@ -565,12 +566,25 @@
         });
     })
 
+
     $('#blackjack').click(function() {
         $.ajax({
             type: 'POST',
             url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
         }).done(function(data) {
             drawGameRoom(data);
+        });
+    })
+
+     $('#surrender').click(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/api/black-jack/rooms/' + gameRoomId + '/surrender',
+        }).done(function(data) {
+            drawGameRoom(data);
+
+
+
         });
     })
 
