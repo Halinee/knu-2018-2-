@@ -402,6 +402,12 @@
         color: green;
         font-size: 21px;
     }
+    #login{
+        background-image: url(/blackjack/mainImages.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 340px;
+    }
 </style>
 </head>
 <body>
@@ -420,7 +426,14 @@
 
 </div>
 
-
+<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userNameDiv">
+    <div style = "display: inline;"id = "userName">
+    </div>
+</div>
+<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userAccountDiv">
+    <div style = "display: inline;"id = "userAccount">
+    </div>
+</div>
 <div class="buttons"><div class="btn" id="logout_button">logout</div></div>
 </div>
 
@@ -476,6 +489,10 @@
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            $('#userNameDiv').prepend("User Name: ");
+            $('#userName').append(user.name);
+            $('#userAccountDiv').prepend("User Account: ");
+            $('#userAccount').append(user.account);
         }
     });
 
@@ -578,6 +595,7 @@
             bet = money;
         }
         $('#bet').html(currentBet + bet);
+        $('#userAccount').html(money - bet);
         $('#money').html(money - bet);
     });
 
@@ -589,6 +607,7 @@
             bet = currentBet;
         }
         $('#bet').html(currentBet - bet);
+        $('#userAccount').html(money + bet);
         $('#money').html(money + bet);
     });
 
@@ -604,6 +623,7 @@
             {
                 $('#blackjack').show();
             }
+            $('#userAccount').html(gameRoom.playerList[user.name].balance);
         } else {
             $('#deal').hide();
             $('#more').hide();
