@@ -402,6 +402,12 @@
         color: green;
         font-size: 21px;
     }
+    #login{
+        background-image: url(/blackjack/mainImages.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 340px;
+    }
 </style>
 </head>
 <body>
@@ -420,7 +426,14 @@
 
 </div>
 
-
+<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userNameDiv">
+    <div style = "display: inline;"id = "userName">
+    </div>
+</div>
+<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userAccountDiv">
+    <div style = "display: inline;"id = "userAccount">
+    </div>
+</div>
 <div class="buttons"><div class="btn" id="logout_button">logout</div></div>
 </div>
 
@@ -442,8 +455,8 @@
     <div class="clear"></div>
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
-    <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="blackjack">Blackjack</div> </div>
     <div class="buttons"><div class="btn" id="surrender">Surrender</div></div>
+    <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="all-in">All-in</div> <div class="btn" id="blackjack">Blackjack</div> </div>
 
 
     <div class="betting-area">
@@ -468,7 +481,8 @@
     var user;
     var gameRoomId;
     var maxCount = 10000;
-    var betCount = parseInt($('#bet').html());;
+    var betCount = parseInt($('#bet').html());
+    var defaultBet = parseInt($('#bet').html());
 
 
     $.ajax({
@@ -480,6 +494,10 @@
             $('#login').hide();
             $('#lobby').show();
             user = data;
+            $('#userNameDiv').prepend("User Name: ");
+            $('#userName').append(user.name);
+            $('#userAccountDiv').prepend("User Account: ");
+            $('#userAccount').append(user.account);
         }
     });
 
@@ -510,7 +528,22 @@
 
     $('#deal').click(function() {
         var bet = parseInt($('#bet').html());
-        betCount = parseInt($('#bet').html());;
+        betCount = parseInt($('#bet').html());
+        defaultBet = parseInt($('#bet').html());
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/black-jack/rooms/' + gameRoomId + '/bet',
+            data: JSON.stringify(bet),
+            contentType:'application/json;',
+        }).done(function(data) {
+            drawGameRoom(data);
+        });
+    })
+
+    $('#all-in').click(function() {
+        var bet = parseInt($('#bet').html());
+        betCount = parseInt($('#bet').html());
 
         $.ajax({
             type: 'POST',
@@ -562,7 +595,23 @@
             type: 'POST',
             url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
         }).done(function(data) {
-            drawGameRoom(data);
+            var currentBet = parseInt($('#bet').html());
+            var money = parseInt($('#money').html());
+
+            if(money < currentBet) {
+                $('#bet').html(money);
+
+                $('#money').html(money);
+
+                drawGameRoom(data);
+                $('#deal').hide();
+                $('#more').hide();
+                $('#less').hide();
+                $('#all-in').show();
+            }
+            else {
+                drawGameRoom(data);
+            }
         });
     })
 
@@ -593,15 +642,15 @@
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
 
-        betCount += 1000;
-
         if (money < bet) {
             bet = money;
         }
-        if(betCount <= maxCount) {
+        if(betCount < maxCount) {
+            betCount += 1000;
             currentBet += bet;
             money -= bet;
         }
+        $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
     });
@@ -611,12 +660,17 @@
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
 
-
         if(currentBet < bet) {
             bet = currentBet;
         }
-        $('#bet').html(currentBet - bet);
-        $('#money').html(money + bet);
+        if(betCount > defaultBet) {
+            betCount -= 1000;
+            currentBet -= bet;
+            money += bet;
+        }
+        $('#userAccount').html(money);
+        $('#bet').html(currentBet);
+        $('#money').html(money);
     });
 
     function drawGameRoom(gameRoom) {
@@ -627,10 +681,12 @@
             $('#hit').hide();
             $('#stand').hide();
             $('#doubledown').hide();
+            $('#all-in').hide();
             if( gameRoom.blackjack )
             {
                 $('#blackjack').show();
             }
+            $('#userAccount').html(gameRoom.playerList[user.name].balance);
         } else {
             $('#deal').hide();
             $('#more').hide();
@@ -638,7 +694,7 @@
             $('#hit').show();
             $('#stand').show();
             $('#doubledown').show();
-
+            $('#all-in').hide();
         }
 
         $('#nextCards').html("");
