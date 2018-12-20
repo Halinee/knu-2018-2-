@@ -54,29 +54,25 @@ public class Player {
             stand();
         }
     }
-
+    
     public void win() {
         if(isBlackJack) {
             balance += currentBet * 1.5;
-            currentBet = 0;
+            return ;
         }
         if( isDoubleDown )
         {
             balance += currentBet * 4;
-            currentBet = 0;
         }
         else
             balance += currentBet * 2;
-            currentBet = 0;
     }
 
     public void tie() {
         balance += currentBet;
-        currentBet = 0;
     }
 
     public void lost() {
-        currentBet = 0;
     }
 
     public Card hitCard() {
