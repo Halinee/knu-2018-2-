@@ -65,13 +65,22 @@ public class BlackjackService {
         return gameRoom;
     }
 
+    public GameRoom surrender(String roomId, User user) {
+        GameRoom gameRoom = gameRoomMap.get(roomId);
+
+        gameRoom.surrender(user.getName());
+        gameRoom.playDealer();
+
+        updateGameResult(gameRoom);
+        return gameRoom;
+    }
+
     public GameRoom hit(String roomId, User user) {
         GameRoom gameRoom = gameRoomMap.get(roomId);
 
         gameRoom.hit(user.getName());
         updateGameResult(gameRoom);
 
-        updateGameResult(gameRoom);
         return gameRoom;
     }
 
@@ -103,4 +112,7 @@ public class BlackjackService {
         updateGameResult(gameRoom);
         return gameRoom;
     }
+
+
+
 }
