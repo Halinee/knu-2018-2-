@@ -489,6 +489,7 @@
     updateUserRanking();
     var betCount = parseInt($('#bet').html());
     var defaultBet = parseInt($('#bet').html());
+    var defaultMoney = parseInt($('#money').html());
 
 
     $.ajax({
@@ -560,6 +561,7 @@
        }).done(function(data) {
            drawGameRoom(data);
            $('#bet').html(defaultBet);
+           $('#money').html(defaultMoney);
        });
    })
 
@@ -626,6 +628,7 @@
             money -= bet;
         }
         defaultBet = currentBet;
+        defaultMoney = money;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
@@ -645,6 +648,7 @@
             money += bet;
         }
         defaultBet = currentBet;
+        defaultMoney = money;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
