@@ -543,6 +543,13 @@
     $('#all-in').click(function() {
         var bet = parseInt($('#bet').html());
         betCount = parseInt($('#bet').html());
+        var currentBet;
+        var money = parseInt($('#money').html());
+
+        currentBet = money;
+        money = 0;
+
+        $('#userAccount').html(0);
 
         $.ajax({
             type: 'POST',
