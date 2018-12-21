@@ -446,12 +446,12 @@
 </div>
 
 <div class="page" id="login">
-    <img class='icon' src = "/blackjack/naver.png" id = "naver_login_button">
-    <img class='icon' src = "/blackjack/github.jpg" id = "github_login_button">
+    <img class='icon' src = "/blackjack/naver.png" style = "cursor : pointer" id = "naver_login_button">
+    <img class='icon' src = "/blackjack/github.jpg" style = "cursor : pointer" id = "github_login_button">
 </div>
 
 <div class="page" id="lobby" style="display: none">
-        <img class="icon" src = "/blackjack/create.png" id ="create_room_button" align="center">
+        <img class="icon" src = "/blackjack/create.png" onmouseover="this.src='/blackjack/start.png'" onmouseout="this.src='/blackjack/create.png'" style = "cursor : pointer" id ="create_room_button" align="center">
 </div>
 
 <div class="page" id="game" style="display: none; background-image: url(/blackjack/background.jpg)">
@@ -461,7 +461,7 @@
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="surrender">Surrender</div></div>
     <div class="buttons">
-        <img class='deal_icon' src = "/blackjack/deal.png" id ="deal">
+        <img class='deal_icon' src = "/blackjack/deal.png" onmouseover="this.src='/blackjack/deal_do.png'" onmouseout="this.src='/blackjack/deal.png'"style = "cursor : pointer" id ="deal">
         <div class="btn" id="blackjack">Blackjack</div>
     </div>
 
@@ -480,7 +480,7 @@
         <span id="money" class="money"></span>
         <div class="clear"></div>
     </div>
-    <img class='logout_icon' src ="/blackjack/logout.png" id = "logout_button" align="center" vertical-align="bottom">
+    <img class='logout_icon' src ="/blackjack/logout.png" style = "cursor : pointer" id = "logout_button" align="center" vertical-align="bottom">
 </div>
 </body>
 <script src="/blackjack/jquery-3.3.1.min.js"></script>
