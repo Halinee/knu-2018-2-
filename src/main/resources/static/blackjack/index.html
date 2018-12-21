@@ -402,12 +402,7 @@
         color: green;
         font-size: 21px;
     }
-    #login{
-        background-image: url(/blackjack/mainImages.png);
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 340px;
-    }
+
 </style>
 </head>
 <body>
@@ -430,7 +425,7 @@
     <div style = "display: inline;"id = "userRanking">
     </div>
 </div>
-<div style = "position : fixed; top : 100px; background-color : #EEFFEE; opacity : 0.7;" id = "userNameDiv">
+<div style = "position : fixed; top : 100px; background-color : #EEFFEE; opacity : 0.7; cursor: pointer;" id = "userNameDiv">
     <div style = "display: inline;"id = "userName">
     </div>
 </div>
@@ -438,29 +433,32 @@
     <div style = "display: inline;"id = "userAccount">
     </div>
 </div>
-<div class="buttons"><div class="btn" id="logout_button">logout</div></div>
+<img src ="/blackjack/logout.png" id = "logout_button">
 </div>
 
 
 <div class="page" id="login">
     <div>
-        <div class="buttons"><div class="btn" id="naver_login_button">Naver 로그인</div></div>
-        <div class="buttons"><div class="btn" id="github_login_button">Github 로그인</div></div>
+        <img src = "/blackjack/naver.png" id = "naver_login_button">
+        <img src = "/blackjack/github.jpg" id = "github_login_button">
     </div>
 </div>
 
 <div class="page" id="lobby" style="display: none">
     <div>
-        <div class="buttons"><div class="btn" id="create_room_button">Create</div></div>
+        <img src = "/blackjack/create.png" id ="create_room_button">
     </div>
 </div>
-<div class="page" id="game" style="display: none">
+<div class="page" id="game" style="display: none; background-image: url(/blackjack/boardBackground.jpg)">
     <div class="dealer-cards"></div>
     <div class="clear"></div>
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="surrender">Surrender</div></div>
-    <div class="buttons"><div class="btn" id="deal">Deal</div><div class="btn" id="blackjack">Blackjack</div> </div>
+    <div class="buttons">
+        <img src = "/blackjack/deal.png" id ="deal">
+        <div class="btn" id="blackjack">Blackjack</div>
+    </div>
 
 
     <div class="betting-area">
@@ -478,6 +476,7 @@
         <div class="clear"></div>
     </div>
 </div>
+<img src = "/blackjack/deco.png">
 </body>
 <script src="/blackjack/jquery-3.3.1.min.js"></script>
 
