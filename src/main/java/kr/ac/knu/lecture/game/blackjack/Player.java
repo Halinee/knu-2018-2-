@@ -60,24 +60,34 @@ public class Player {
     }
     
     public void win() {
-        if(isBlackJack) {
-            balance += currentBet * 1.5;
-            return ;
+        if(isSurrender) {
+            balance += currentBet+currentBet/2;
         }
-        if( isDoubleDown )
-        {
-            balance += currentBet * 4;
+        else {
+            if (isBlackJack) {
+                balance += currentBet * 1.5;
+                return;
+            }
+            if (isDoubleDown) {
+                balance += currentBet * 4;
+            } else
+                balance += currentBet * 2;
         }
-        else
-            balance += currentBet * 2;
     }
 
     public void tie() {
-        balance += currentBet;
+        if(isSurrender) {
+            balance += currentBet+currentBet/2;
+        }
+        else {
+            balance += currentBet;
+        }
     }
 
     public void lost() {
-
+        if(isSurrender) {
+            balance += currentBet+currentBet/2;
+        }
     }
 
     public Card hitCard() {
@@ -85,9 +95,6 @@ public class Player {
     }
 
     public void stand() {
-        if(isSurrender) {
-            balance += currentBet / 2;
-        }
         this.isPlaying = false;
     }
 }

@@ -488,8 +488,7 @@
     updateUserRanking();
     var betCount = parseInt($('#bet').html());
     var defaultBet = parseInt($('#bet').html());
-    var defaultMoney = parseInt($('#money').html());
-
+    var showBet = parseInt($('#bet').html());
 
     $.ajax({
         type: 'GET',
@@ -536,6 +535,7 @@
         var bet = parseInt($('#bet').html());
         betCount = parseInt($('#bet').html());
         defaultBet = parseInt($('#bet').html());
+        showBet = parseInt($('#bet').html());
 
         $.ajax({
             type: 'POST',
@@ -549,6 +549,8 @@
 
 
     $('#nextCardInput').keypress(function(event) {
+       var money = parseInt($('#money').html());
+
        if(event.which !=13){
            return;
        }
@@ -559,8 +561,8 @@
            contentType:'application/json;',
        }).done(function(data) {
            drawGameRoom(data);
-           $('#bet').html(defaultBet);
-           $('#money').html(defaultMoney);
+           $('#bet').html(showBet);
+           $('#money').html(money);
        });
    })
 
@@ -591,9 +593,10 @@
         }).done(function(data) {
             drawGameRoom(data);
             updateUserRanking();
+            defaultBet = parseInt($('#bet').html());
         });
     })
-   
+
     $('#blackjack').click(function() {
         $.ajax({
             type: 'POST',
@@ -624,14 +627,13 @@
         if(betCount < maxCount) {
             betCount += 1000;
             currentBet += bet;
-            money -= bet;
+            showBet += bet;
         }
-        defaultBet = currentBet;
-        defaultMoney = money;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
     });
+
     $('#less').click(function(){
         var bet = 1000;
         var currentBet = parseInt($('#bet').html());
@@ -644,10 +646,8 @@
         if(betCount > defaultBet) {
             betCount -= 1000;
             currentBet -= bet;
-            money += bet;
+            showBet -= bet;
         }
-        defaultBet = currentBet;
-        defaultMoney = money;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
