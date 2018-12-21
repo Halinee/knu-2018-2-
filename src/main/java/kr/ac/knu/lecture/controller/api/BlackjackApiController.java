@@ -51,6 +51,11 @@ public class BlackjackApiController {
         User currentuser = userRepository.getOne(user.getName());
         return blackjackService.stand(roomId, currentuser);
     }
+    @PostMapping("/rooms/{roomId}/surrender")
+    public GameRoom surrender(@AuthenticationPrincipal User user, @PathVariable String roomId) {
+        User currentuser = userRepository.getOne(user.getName());
+        return blackjackService.surrender(roomId, currentuser);
+    }
 
     @PutMapping("/rooms/{roomId}/deck/cards")
     public GameRoom addNextCards(@PathVariable String roomId, @RequestBody int rank){

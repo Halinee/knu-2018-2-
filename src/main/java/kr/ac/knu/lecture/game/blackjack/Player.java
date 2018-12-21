@@ -21,6 +21,9 @@ public class Player {
     private boolean isDoubleDown = false;   //doubledown을 사용했는지 판단
     @Getter
     private boolean isBlackJack = false;    //blackjack 판단
+    @Getter
+    @Setter
+    private boolean isSurrender = false;
 
     public Player(long seedMoney, Hand hand) {
         this.balance = seedMoney;
@@ -73,6 +76,7 @@ public class Player {
     }
 
     public void lost() {
+
     }
 
     public Card hitCard() {
@@ -80,7 +84,11 @@ public class Player {
     }
 
     public void stand() {
+        if(isSurrender) {
+            balance += currentBet / 2;
+        }
         this.isPlaying = false;
     }
+
 
 }

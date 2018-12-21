@@ -34,6 +34,7 @@ public class Evaluator {
             else if(playerResult == dealerResult){
                 player.tie();
             }
+
             else // playerResult <= 21
             {
                 if(dealerResult > 21){
