@@ -489,6 +489,7 @@
     updateUserRanking();
     var betCount = parseInt($('#bet').html());
     var defaultBet = parseInt($('#bet').html());
+    var showBet = parseInt($('#bet').html());
 
     $.ajax({
         type: 'GET',
@@ -535,6 +536,8 @@
         var bet = parseInt($('#bet').html());
         betCount = parseInt($('#bet').html());
         defaultBet = parseInt($('#bet').html());
+        showBet = parseInt($('#bet').html());
+
         $.ajax({
             type: 'POST',
             url: '/api/black-jack/rooms/' + gameRoomId + '/bet',
@@ -559,7 +562,7 @@
            contentType:'application/json;',
        }).done(function(data) {
            drawGameRoom(data);
-           $('#bet').html(defaultBet);
+           $('#bet').html(showBet);
            $('#money').html(money);
        });
    })
@@ -625,8 +628,8 @@
         if(betCount < maxCount) {
             betCount += 1000;
             currentBet += bet;
+            showBet += bet;
         }
-        defaultBet = currentBet;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
@@ -644,8 +647,8 @@
         if(betCount > defaultBet) {
             betCount -= 1000;
             currentBet -= bet;
+            showBet -= bet;
         }
-        defaultBet = currentBet;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
