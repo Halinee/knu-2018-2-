@@ -678,10 +678,7 @@
             $('#stand').hide();
             $('#doubledown').hide();
             $('#surrender').hide();
-            if( gameRoom.blackjack )
-            {
-                $('#blackjack').show();
-            }
+            $('#blackjack').hide();
             $('#userAccount').html(gameRoom.playerList[user.name].balance);
         } else {
             $('#deal').hide();
@@ -691,8 +688,19 @@
             $('#stand').show();
             $('#doubledown').show();
             $('#surrender').show();
+            if(gameRoom.playerList[user.name].hand.cardList.length == 2
+                && gameRoom.playerList[user.name].hand.cardSum == 21){
+                //blackjack
+                $('#deal').hide();  
+                $('#more').hide();
+                $('#less').hide();
+                $('#hit').hide();
+                $('#stand').hide();
+                $('#doubledown').hide();
+                $('#surrender').hide();
+                $('#blackjack').show();
+            }
         }
-
         $('#nextCards').html("");
         gameRoom.deck.cardList.forEach(function(card){
             $('#nextCards').append(card.rank + ",");
