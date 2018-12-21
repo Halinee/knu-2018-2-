@@ -52,7 +52,8 @@
         color: #333;
         font-size: 15px;
         line-height: 40px;
-        background-color: #FFFFFF;
+        background-image: url('/blackjack/red.jpg');
+        background-size: cover;
     }
 
     .clear{
@@ -60,12 +61,28 @@
     }
 
     .page{
+        background-size: cover;
         width: auto;
-        max-width: 900px;
+        height: auto;
         margin: 0 auto;
-        background-color: #fff;
         min-height: 500px;
         text-align: center;
+    }
+
+    .icon{
+        width: 100px;
+        height: 100px;
+        margin: 50px 20px 0px 20px;
+    }
+    .deal_icon{
+        width: 150px;
+        height: 150px;
+        margin: 0px 20px 0px 20px;
+    }
+    .logout_icon{
+        width: 100px;
+        height: 100px;
+        margin: 100px 20px 0px 20px;
     }
 
     .dealer-cards .card, .player-cards .card {
@@ -465,7 +482,6 @@
 </head>
 <body>
 
-
 <div style = "position : fixed; top : 0; left : 0;
     height : 100px; width:100%; background-color : #EEFFEE; opacity : 0.7; ">
 
@@ -476,45 +492,35 @@
 </div>
 
 <div style = "height:100px; width 100%;">
-
 </div>
 
-<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userRankingDiv">
-    <div style = "display: inline;"id = "userRanking">
-    </div>
+<div style = "position : fixed; top : 100px; color : #FFFFFF; opacity : 0.9;" id = "userRankingDiv">
+    <div style = "display: inline;"id = "userRanking"></div>
 </div>
-<div style = "position : fixed; top : 100px; background-color : #EEFFEE; opacity : 0.7; cursor: pointer;" id = "userNameDiv">
-    <div style = "display: inline;"id = "userName">
-    </div>
+<div style = "position : fixed; top : 140px; color : #FFFFFF; opacity : 0.9; " id = "userNameDiv">
+    <div style = "display: inline;"id = "userName"></div>
 </div>
-<div style = "position : fixed; top : 130px; background-color : #EEFFEE; opacity : 0.7;" id = "userAccountDiv">
-    <div style = "display: inline;"id = "userAccount">
-    </div>
+<div style = "position : fixed; top : 180px; color : #FFFFFF; opacity : 0.9;" id = "userAccountDiv">
+    <div style = "display: inline;"id = "userAccount"></div>
 </div>
-<img src ="/blackjack/logout.png" id = "logout_button">
-</div>
-
 
 <div class="page" id="login">
-    <div>
-        <img src = "/blackjack/naver.png" id = "naver_login_button">
-        <img src = "/blackjack/github.jpg" id = "github_login_button">
-    </div>
+    <img class='icon' src = "/blackjack/naver.png" style = "cursor : pointer" id = "naver_login_button">
+    <img class='icon' src = "/blackjack/github.jpg" style = "cursor : pointer" id = "github_login_button">
 </div>
 
 <div class="page" id="lobby" style="display: none">
-    <div>
-        <img src = "/blackjack/create.png" id ="create_room_button">
-    </div>
+        <img class="icon" src = "/blackjack/create.png" onmouseover="this.src='/blackjack/start.png'" onmouseout="this.src='/blackjack/create.png'" style = "cursor : pointer" id ="create_room_button" align="center">
 </div>
-<div class="page" id="game" style="display: none; background-image: url(/blackjack/boardBackground.jpg)">
+
+<div class="page" id="game" style="display: none; background-image: url(/blackjack/background.jpg)">
     <div class="dealer-cards"></div>
     <div class="clear"></div>
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="surrender">Surrender</div></div>
     <div class="buttons">
-        <img src = "/blackjack/deal.png" id ="deal">
+        <img class='deal_icon' src = "/blackjack/deal.png" onmouseover="this.src='/blackjack/deal_do.png'" onmouseout="this.src='/blackjack/deal.png'"style = "cursor : pointer" id ="deal">
         <div class="btn" id="blackjack">Blackjack</div>
     </div>
 
@@ -534,8 +540,8 @@
         <span id="money" class="money"></span>
         <div class="clear"></div>
     </div>
+    <img class='logout_icon' src ="/blackjack/logout.png" style = "cursor : pointer" id = "logout_button" align="center" vertical-align="bottom">
 </div>
-<img src = "/blackjack/deco.png">
 </body>
 <script src="/blackjack/jquery-3.3.1.min.js"></script>
 
@@ -558,6 +564,7 @@
             $('#login').hide();
             $('#lobby').show();
             user = data;
+
             $('#userNameDiv').prepend("User Name: ");
             $('#userName').append(user.name);
             $('#userAccountDiv').prepend("User Account: ");
@@ -723,7 +730,8 @@
             console.log(userRanking);
             $('#userRanking').html("");
             userRanking.reverse().forEach((user) => {
-                $('#userRanking').append(user.name);
+                $('#userRanking').prepend("Ranking : ");
+                $('#userRanking').append(user.name + "(" + user.account + ") ");
             })
         });
     }
