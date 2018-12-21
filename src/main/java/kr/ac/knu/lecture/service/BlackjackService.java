@@ -2,7 +2,6 @@ package kr.ac.knu.lecture.service;
 
 import kr.ac.knu.lecture.domain.User;
 import kr.ac.knu.lecture.game.blackjack.Deck;
-import kr.ac.knu.lecture.game.blackjack.Evaluator;
 import kr.ac.knu.lecture.game.blackjack.GameRoom;
 import kr.ac.knu.lecture.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by rokim on 2018. 11. 30..
@@ -106,4 +104,9 @@ public class BlackjackService {
         return gameRoom;
     }
 
+    public GameRoom playSplit(String roomId, User currentuser) {
+        GameRoom gameRoom = gameRoomMap.get(roomId);
+        gameRoom.playSplit();
+        return gameRoom;
+    }
 }

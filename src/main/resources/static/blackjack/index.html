@@ -456,6 +456,7 @@
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="blackjack">Blackjack</div> </div>
+    <div class="buttons"><div class="btn" id="split">split</div></div>
 
 
     <div class="betting-area">
@@ -482,7 +483,7 @@
     var maxCount = 10000;
     var betCount = parseInt($('#bet').html());;
 
-
+    $('#split').hide();
     $.ajax({
         type: 'GET',
         url: '/api/users/myself',
@@ -537,6 +538,7 @@
             drawGameRoom(data);
         });
     })
+
 
     $('#nextCardInput').keypress(function(event) {
        if(event.which !=13){
@@ -609,16 +611,23 @@
         $('#bet').html(currentBet);
         $('#money').html(money);
     });
-
+    $('#split').click(function(){
+        $.ajax({
+            type: 'POST',
+            url: '/api/black-jack/rooms/' + gameRoomId + '/playSplit',
+        }).done(function(data) {
+            drawGameRoom(data);
+        });
+    });
     $('#less').click(function(){
         var bet = 1000;
         var currentBet = parseInt($('#bet').html());
         var money = parseInt($('#money').html());
 
-
         if(currentBet < bet) {
             bet = currentBet;
         }
+
         $('#bet').html(currentBet - bet);
         $('#userAccount').html(money + bet);
         $('#money').html(money + bet);
@@ -673,6 +682,14 @@
 
         $('#bet').html(gameRoom.playerList[user.name].currentBet);
         $('#money').html(gameRoom.playerList[user.name].balance);
+        if(gameRoom.playerList[user.name].hand.cardList.length == 2){
+            var splitFlag = gameRoom.playerList[user.name].hand.cardList[0].rank == gameRoom.playerList[user.name].hand.cardList[1].rank;
+            if(splitFlag){
+                $('#split').show();
+                console.log("split!!!!");
+
+            }
+        }
     }
 
     function generateCardDiv(rank, suit) {

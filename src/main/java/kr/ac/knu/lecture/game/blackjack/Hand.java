@@ -1,6 +1,7 @@
 package kr.ac.knu.lecture.game.blackjack;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,10 @@ public class Hand {
     private Deck deck;
     @Getter
     private List<Card> cardList = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private List<Card> splitList = new ArrayList<>();
 
     public Hand(Deck deck){
         this.deck = deck;
@@ -50,5 +55,9 @@ public class Hand {
 
     public void reset() {
         cardList.clear();
+    }
+
+    public void addSplit(Card card) {
+        splitList.add(card);
     }
 }
