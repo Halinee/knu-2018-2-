@@ -63,8 +63,16 @@ public class GameRoom {
 
     public Card hit(String name) {
         Player player = playerList.get(name);
-        isHitClicked = true;
-        return player.hitCard();
+        Card card = player.hitCard();
+        if(player.getHand().getCardSum() > 21) {
+            player.stand();
+            playDealer();
+            return null;
+        }
+        else {
+            isHitClicked = true;
+            return card;
+        }
     }
 
     public void stand(String name) {
@@ -95,6 +103,4 @@ public class GameRoom {
         evaluator.evaluate();
         this.isFinished = true;
     }
-
-
 }

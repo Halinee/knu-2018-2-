@@ -39,12 +39,13 @@ public class Player {
 
     public void placeBet(long bet) {
         if (balance < bet) {
-            throw new NotEnoughBalanceException();
+            currentBet = balance;
+            balance = 0;
         }
-
-        balance -= bet;
-        currentBet = bet;
-
+        else {
+            balance -= bet;
+            currentBet = bet;
+        }
         isPlaying = true;
     }
 
@@ -89,6 +90,4 @@ public class Player {
         }
         this.isPlaying = false;
     }
-
-
 }

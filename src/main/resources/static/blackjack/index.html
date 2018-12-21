@@ -426,11 +426,11 @@
 
 </div>
 
-<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userNameDiv">
+<div style = "position : fixed; top : 100px; background-color : #EEFFEE; opacity : 0.7;" id = "userNameDiv">
     <div style = "display: inline;"id = "userName">
     </div>
 </div>
-<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userAccountDiv">
+<div style = "position : fixed; top : 130px; background-color : #EEFFEE; opacity : 0.7;" id = "userAccountDiv">
     <div style = "display: inline;"id = "userAccount">
     </div>
 </div>
@@ -456,7 +456,7 @@
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="surrender">Surrender</div></div>
-    <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="all-in">All-in</div> <div class="btn" id="blackjack">Blackjack</div> </div>
+    <div class="buttons"><div class="btn" id="deal">Deal</div><div class="btn" id="blackjack">Blackjack</div> </div>
 
 
     <div class="betting-area">
@@ -541,27 +541,6 @@
         });
     })
 
-    $('#all-in').click(function() {
-        var bet = parseInt($('#bet').html());
-        betCount = parseInt($('#bet').html());
-        var currentBet;
-        var money = parseInt($('#money').html());
-
-        currentBet = money;
-        money = 0;
-
-        $('#userAccount').html(0);
-
-        $.ajax({
-            type: 'POST',
-            url: '/api/black-jack/rooms/' + gameRoomId + '/bet',
-            data: JSON.stringify(bet),
-            contentType:'application/json;',
-        }).done(function(data) {
-            drawGameRoom(data);
-        });
-    })
-
     $('#nextCardInput').keypress(function(event) {
        if(event.which !=13){
            return;
@@ -575,7 +554,6 @@
            drawGameRoom(data);
        });
    })
-
 
     $('#doubledown').click(function() {
         $.ajax({
@@ -593,7 +571,6 @@
         }).done(function(data) {
             drawGameRoom(data);
             $('#doubledown').hide();
-
         });
     })
 
@@ -602,26 +579,9 @@
             type: 'POST',
             url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
         }).done(function(data) {
-            var currentBet = parseInt($('#bet').html());
-            var money = parseInt($('#money').html());
-
-            if(money < currentBet) {
-                $('#bet').html(money);
-
-                $('#money').html(money);
-
-                drawGameRoom(data);
-                $('#deal').hide();
-                $('#more').hide();
-                $('#less').hide();
-                $('#all-in').show();
-            }
-            else {
-                drawGameRoom(data);
-            }
+            drawGameRoom(data);
         });
     })
-
 
     $('#blackjack').click(function() {
         $.ajax({
@@ -638,9 +598,6 @@
             url: '/api/black-jack/rooms/' + gameRoomId + '/surrender',
         }).done(function(data) {
             drawGameRoom(data);
-
-
-
         });
     })
 
@@ -688,7 +645,7 @@
             $('#hit').hide();
             $('#stand').hide();
             $('#doubledown').hide();
-            $('#all-in').hide();
+            $('#surrender').hide();
             if( gameRoom.blackjack )
             {
                 $('#blackjack').show();
@@ -701,7 +658,7 @@
             $('#hit').show();
             $('#stand').show();
             $('#doubledown').show();
-            $('#all-in').hide();
+            $('#surrender').show();
         }
 
         $('#nextCards').html("");

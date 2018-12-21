@@ -83,7 +83,6 @@ public class BlackjackService {
         gameRoom.hit(user.getName());
         updateGameResult(gameRoom);
 
-        updateGameResult(gameRoom);
         return gameRoom;
     }
 
