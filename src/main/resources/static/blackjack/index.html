@@ -43,8 +43,12 @@
         color: #06C;
     }
 
+    @font-face{
+        font-family: 'RedPostBox';
+        src : '/blackjack/DXRMbxB-KSCpc-EUC-H.ttf'
+    }
     body{
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: RedPostBox;
         color: #333;
         font-size: 15px;
         line-height: 40px;
@@ -85,6 +89,7 @@
 
     .dealer-total, .player-total{
         margin-top: 10px;
+        color:white;
     }
 
     .buttons{
@@ -98,7 +103,8 @@
 
 
     .btn {
-        font: bold 13px "Helvetica Neue", Helvetica, Arial, clean, sans-serif !important;
+        font: bold 13px "RedPostBox" !important;
+        letter-spacing: 1px;
         text-shadow: 0 -1px 1px rgba(0,0,0,0.25), -2px 0 1px rgba(0,0,0,0.25);
         border-radius: 5px;
         -moz-border-radius: 5px;
@@ -123,6 +129,38 @@
         padding-top: 10px;
         height: 40px;
         width: 100px;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+    }
+
+    .betting-button {
+        font: bold 13px "RedPostBox" !important;
+        letter-spacing: 1px;
+        text-shadow: 0 -1px 1px rgba(0,0,0,0.25), -2px 0 1px rgba(0,0,0,0.25);
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        display: inline-block;
+        color: white;
+        white-space: nowrap;
+        text-decoration: none;
+        cursor: pointer;
+        background-color: #A9014B;
+        border-style: none;
+        text-align: center;
+        overflow: visible;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding-top: 10px;
+        height: 40px;
+        width: 40px;
         -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
         -moz-box-sizing: border-box;    /* Firefox, other Gecko */
         box-sizing: border-box;         /* Opera/IE 8+ */
@@ -384,8 +422,11 @@
     }
 
     .betting-area{
-        width: 70px;
+        font-size:20px;
+        text-align:center;
         margin: 30px auto 30px auto;
+        color:white;
+        white-space:nowrap;
     }
 
     .betting-area #more{
@@ -399,9 +440,26 @@
     }
 
     .money{
-        color: green;
-        font-size: 21px;
+        color: red;
+        font-size: 25px;
+        text-align:center;
+        width: -webkit-fill-available;
     }
+
+    .fund-area {
+        text-align: center;
+        color: white;
+        font-size:20px;
+    }
+
+    .betting-btn-area {
+        text-align:text;
+        margin:30px auto 30px auto;
+    }
+
+
+
+
 
 </style>
 </head>
@@ -464,13 +522,14 @@
     <div class="betting-area">
         <b>Your Bet</b><br>
         <div id="bet" class="bet money">0</div>
-        <div>
-            <div class="btn" id="more">+</div>
-            <div class="btn" id="less">-</div>
-        </div>
+
         <div class="clear"></div>
     </div>
-    <div>
+    <div class="betting-btn-area">
+        <div class="betting-button" id="more">+</div>
+        <div class="betting-button" id="less">-</div>
+    </div>
+    <div class="fund-area">
         <b>Available Funds</b><br>
         <span id="money" class="money"></span>
         <div class="clear"></div>
