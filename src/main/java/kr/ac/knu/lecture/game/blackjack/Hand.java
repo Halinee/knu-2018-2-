@@ -14,10 +14,6 @@ public class Hand {
     @Getter
     private List<Card> cardList = new ArrayList<>();
 
-    @Getter
-    @Setter
-    private List<Card> splitList = new ArrayList<>();
-
     public Hand(Deck deck){
         this.deck = deck;
     }
@@ -57,7 +53,4 @@ public class Hand {
         cardList.clear();
     }
 
-    public void addSplit(Card card) {
-        splitList.add(card);
-    }
 }

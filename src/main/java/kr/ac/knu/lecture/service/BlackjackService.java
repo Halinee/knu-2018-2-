@@ -103,10 +103,4 @@ public class BlackjackService {
         updateGameResult(gameRoom);
         return gameRoom;
     }
-
-    public GameRoom playSplit(String roomId, User currentuser) {
-        GameRoom gameRoom = gameRoomMap.get(roomId);
-        gameRoom.playSplit();
-        return gameRoom;
-    }
 }

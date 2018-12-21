@@ -426,6 +426,10 @@
 
 </div>
 
+<div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userRankingDiv">
+    <div style = "display: inline;"id = "userRanking">
+    </div>
+</div>
 <div style = "background-color : #EEFFEE; opacity : 0.7;" id = "userNameDiv">
     <div style = "display: inline;"id = "userName">
     </div>
@@ -456,7 +460,6 @@
     <div class="player-cards"></div>
     <div class="buttons"><div class="btn" id="hit">Hit</div><div class="btn" id="stand">Stand</div><div class="btn" id="doubledown">doubledown</div></div>
     <div class="buttons"><div class="btn" id="deal">Deal</div> <div class="btn" id="blackjack">Blackjack</div> </div>
-    <div class="buttons"><div class="btn" id="split">split</div></div>
 
 
     <div class="betting-area">
@@ -482,13 +485,14 @@
     var gameRoomId;
     var maxCount = 10000;
     var betCount = parseInt($('#bet').html());;
-
-    $('#split').hide();
+    var userRanking;
+    updateUserRanking();
     $.ajax({
         type: 'GET',
         url: '/api/users/myself',
         contentType:'application/json;'
     }).done(function(data) {
+        console.log(data);
         if (data && data.name) {
             $('#login').hide();
             $('#lobby').show();
@@ -561,6 +565,7 @@
             url: '/api/black-jack/rooms/' + gameRoomId + '/doubledown',
         }).done(function(data) {
             drawGameRoom(data);
+            updateUserRanking();
         });
     })
 
@@ -571,7 +576,6 @@
         }).done(function(data) {
             drawGameRoom(data);
             $('#doubledown').hide();
-
         });
     })
 
@@ -581,6 +585,7 @@
             url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
         }).done(function(data) {
             drawGameRoom(data);
+            updateUserRanking();
         });
     })
 
@@ -590,6 +595,7 @@
             url: '/api/black-jack/rooms/' + gameRoomId + '/stand',
         }).done(function(data) {
             drawGameRoom(data);
+            updateUserRanking();
         });
     })
 
@@ -611,14 +617,6 @@
         $('#bet').html(currentBet);
         $('#money').html(money);
     });
-    $('#split').click(function(){
-        $.ajax({
-            type: 'POST',
-            url: '/api/black-jack/rooms/' + gameRoomId + '/playSplit',
-        }).done(function(data) {
-            drawGameRoom(data);
-        });
-    });
     $('#less').click(function(){
         var bet = 1000;
         var currentBet = parseInt($('#bet').html());
@@ -632,7 +630,22 @@
         $('#userAccount').html(money + bet);
         $('#money').html(money + bet);
     });
-
+    function updateUserRanking() {
+        $.ajax({
+            type: 'GET',
+            url: '/api/black-jack/userList',
+            contentType:'application/json;'
+        }).done(function(data) {
+            userRanking = data.sort((a,b)=> {
+                return a.account - b.account;
+            })
+            console.log(userRanking);
+            $('#userRanking').html("");
+            userRanking.reverse().forEach((user) => {
+                $('#userRanking').append(user.name);
+            })
+        });
+    }
     function drawGameRoom(gameRoom) {
         if (gameRoom.finished) {
             $('#deal').show();
@@ -682,14 +695,7 @@
 
         $('#bet').html(gameRoom.playerList[user.name].currentBet);
         $('#money').html(gameRoom.playerList[user.name].balance);
-        if(gameRoom.playerList[user.name].hand.cardList.length == 2){
-            var splitFlag = gameRoom.playerList[user.name].hand.cardList[0].rank == gameRoom.playerList[user.name].hand.cardList[1].rank;
-            if(splitFlag){
-                $('#split').show();
-                console.log("split!!!!");
 
-            }
-        }
     }
 
     function generateCardDiv(rank, suit) {

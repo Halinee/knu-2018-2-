@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by rokim on 2018. 5. 21..
  */
@@ -51,17 +53,16 @@ public class BlackjackApiController {
         User currentuser = userRepository.getOne(user.getName());
         return blackjackService.stand(roomId, currentuser);
     }
-
-    @PostMapping("/rooms/{roomId}/playSplit")
-    public GameRoom playSplit(@AuthenticationPrincipal User user, @PathVariable String roomId) {
-        User currentuser = userRepository.getOne(user.getName());
-        return blackjackService.playSplit(roomId, currentuser);
-    }
-
     @PutMapping("/rooms/{roomId}/deck/cards")
     public GameRoom addNextCards(@PathVariable String roomId, @RequestBody int rank){
         return blackjackService.addNextCards(roomId, rank);
     }
+
+    @GetMapping("/userList")
+    public List<User> getUserList() {
+        return userRepository.findAll();
+    }
+
 
     @GetMapping("/rooms/{roomId}")
     public GameRoom getGameRoomData(@PathVariable String roomId) {

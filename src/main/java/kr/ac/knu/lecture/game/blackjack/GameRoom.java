@@ -89,9 +89,4 @@ public class GameRoom {
         this.isFinished = true;
     }
 
-    public void playSplit() {
-        Card card = this.dealer.getHand().getCardList().remove(0);
-        this.dealer.getHand().addSplit(card);
-        this.dealer.getHand().drawCard();
-    }
 }
