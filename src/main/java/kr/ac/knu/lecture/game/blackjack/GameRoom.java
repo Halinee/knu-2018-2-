@@ -59,6 +59,7 @@ public class GameRoom {
         this.isFinished = false;
         dealer.deal();
         playerList.forEach((s, player) -> player.deal());
+
     }
 
     public Card hit(String name) {

@@ -559,6 +559,7 @@
            contentType:'application/json;',
        }).done(function(data) {
            drawGameRoom(data);
+           $('#bet').html(defaultBet);
        });
    })
 
@@ -624,6 +625,7 @@
             currentBet += bet;
             money -= bet;
         }
+        defaultBet = currentBet;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
@@ -642,6 +644,7 @@
             currentBet -= bet;
             money += bet;
         }
+        defaultBet = currentBet;
         $('#userAccount').html(money);
         $('#bet').html(currentBet);
         $('#money').html(money);
